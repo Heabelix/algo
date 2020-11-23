@@ -11,19 +11,25 @@
 void lecture(std::string nameFile)
 {
 	
-	int nb_cibles, nb_capteurs;
+	//int nb_cibles, nb_capteurs;
 	std::ifstream file(nameFile);
-	if(file)
+	if(file.is_open())
 	{
-		file >> nb_cibles;
-		file >> nb_capteurs;
-		const int nb_capteurs2 = nb_capteurs;
-		Capteur capteurs[nb_capteurs2];
-		for (int index=1;index<=nb_capteurs;index++)
+		std::string param;
+
+		file >> param;
+		const int nb_cibles = std::stoi(param);
+
+		file >> param;
+		const int nb_capteurs = std::stoi(param);
+
+		std::vector<Capteur*> capteurs(nb_capteurs);
+		for (int index = 0;index < nb_capteurs;index++)
 		{
 			int cout;
 			file >> cout;
-			Capteur capteur(index, cout);
+			Capteur* capteur;
+			capteur = new Capteur(index, cout);
 			capteurs[index] = capteur;
 			
 		}
@@ -35,8 +41,10 @@ void lecture(std::string nameFile)
 			{
 				int id_capteur;
 				file >> id_capteur;
-				Cible cible(index);
-				capteurs[id_capteur].addCible(cible);
+
+				Cible* cible;
+				cible = new Cible(index);
+				capteurs[id_capteur]->addCible(cible);
 			}
 			
 			
@@ -45,7 +53,7 @@ void lecture(std::string nameFile)
 }
 int main()
 {
-    
+	lecture("inst41.txt");
 }
 
 

@@ -1,7 +1,5 @@
 #pragma once
 #include <vector>
-#include "Capteur.h"
-
 
 
 class Cible
