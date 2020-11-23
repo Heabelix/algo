@@ -2,5 +2,5 @@
 
 Cible::Cible(int id)
 {
-	this->id = id;
+	this->id = id + 1;
 }

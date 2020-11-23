@@ -15,39 +15,40 @@ void lecture(std::string nameFile)
 	std::ifstream file(nameFile);
 	if(file.is_open())
 	{
-		std::string param;
+		int param;
 
 		file >> param;
-		const int nb_cibles = std::stoi(param);
+		const int nb_cibles = param;
 
 		file >> param;
-		const int nb_capteurs = std::stoi(param);
+		const int nb_capteurs = param;
 
 		std::vector<Capteur*> capteurs(nb_capteurs);
-		for (int index = 0;index < nb_capteurs;index++)
+		for (int index = 0; index < nb_capteurs; index++)
 		{
 			int cout;
 			file >> cout;
+
 			Capteur* capteur;
 			capteur = new Capteur(index, cout);
 			capteurs[index] = capteur;
 			
 		}
-		for (int index = 1; index <= nb_cibles; index++)
+		for (int index_cible = 0; index_cible < nb_cibles; index_cible++)
 		{
 			int capteur_cible;
 			file >> capteur_cible;
-			for (int index2 = 1; index2<=capteur_cible;index2++)
+
+			Cible* cible;
+			cible = new Cible(index_cible);
+
+			for (int index_capteur = 0; index_capteur < capteur_cible; index_capteur++)
 			{
 				int id_capteur;
 				file >> id_capteur;
 
-				Cible* cible;
-				cible = new Cible(index);
-				capteurs[id_capteur]->addCible(cible);
-			}
-			
-			
+				capteurs[id_capteur - 1]->addCible(cible);
+			}	
 		}
 	}
 }
