@@ -142,6 +142,7 @@
     <ClCompile Include="algo.cpp" />
     <ClCompile Include="Capteur.cpp" />
     <ClCompile Include="Cible.cpp" />
+    <ClCompile Include="lp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Capteur.h" />
