@@ -2,7 +2,7 @@
 
 Capteur::Capteur(void)
 {
-	this->id   = 0;
+	this->id = 0;
 	this->cout = 0;
 }
 
