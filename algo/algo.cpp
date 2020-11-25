@@ -66,53 +66,91 @@ void lecture(std::string nameFile)
 
 int rechercheCapteur()
 {
-	int capteurPris =-1;
+	int capteurPris = -1;
 	double maxCoutImplentation = -1;
-	
-	for(int i=0;i<nb_capteurs;i++)
+
+	for (int i = 0; i < nb_capteurs; i++)
 	{
-		if (capteursChoisis[i] ==0)
+		if (capteursChoisis[i] == 0)
 		{
-			Capteur capteur = capteurs[i];
-			int nbCiclesACouvrir;
-			for(int j = 0; j<= nbcible.nbcible)
+			Capteur* capteur = (*capteurs)[i];
+			int nbCiclesACouvrir = 0;
+			for (int j = 0; j < capteur->getCibles().size(); j++)
 			{
-				if (ciblesChoisies[ capteur.getCibles()[j].id] == 0)
+				if (ciblesChoisies[capteur->getCibles()[j]->get_id()] == 0)
 				{
 					nbCiclesACouvrir++;
 				}
 			}
-			double coutImplementation = nbCiclesACouvrir / capteur.getCout();
+			double coutImplementation = nbCiclesACouvrir / capteur->get_cout();
 			if (coutImplementation > maxCoutImplentation)
 			{
 				maxCoutImplentation = coutImplementation;
-				capteurPris = capteur.getId();
+				capteurPris = capteur->get_id();
 			}
 		}
-		return capteurPris;
+	}
+	return capteurPris;
+}
+int toutesLesCiblesCouvertes()
+{
+	int retour = 1;
+	for (int j = 0; j < nb_cibles; j++)
+	{
+		if (ciblesChoisies[j] == 0)
+		{
+			retour = 0;
+			break;
+		}
+	}
+	return retour;
+}
+
+void initialisationChoix()
+{
+	for (int j = 0; j < nb_cibles; j++)
+	{
+		ciblesChoisies[j] = 0;
+	}
+	for (int j = 0; j < nb_capteurs; j++)
+	{
+		capteursChoisis[j] = 0;
 	}
 }
+
 int main()
 {
 	lecture("inst41.txt");
-	capteursChoisis = new int* [nb_capteurs];
-	ciblesChoisies = new int* [nb_cibles];
+	capteursChoisis = new int[nb_capteurs];
+	ciblesChoisies = new int[nb_cibles];
 	//Init à 0 tableauèx;
+	initialisationChoix();
 
-	while(!toutesLesCibles(ciblesChoisies))
+	while (toutesLesCiblesCouvertes() == 0)
 	{
-		capteurIndex = rechercheCapteur();
+		int capteurIndex = rechercheCapteur();
 		if (capteurIndex != -1)
 		{
-			//mettre à jour capteurs choisi
-			//mettre à jour cibles choisie
+			capteursChoisis[capteurIndex] = 1;
+			Capteur* capteur = (*capteurs)[capteurIndex];
+			for (int i = 0; i < capteur->getCibles().size(); i++)
+			{
+				ciblesChoisies[capteur->getCibles()[i]->get_id()] = 1;
+			}
 		}
-		
 	}
-	
+
 	//Calcul cout tota
 	double coutTotal = 0;
-	
+	for (int i = 0; i < nb_capteurs; i++)
+	{
+		if (capteursChoisis[i] ==1)
+		{		coutTotal = coutTotal + capteursChoisis[i] * (*capteurs)[i]->get_cout();
+
+			printf("Capteur : %d\n", i+1);
+		}
+	}
+	printf("Cout : %f", coutTotal);
 }
 
 
