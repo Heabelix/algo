@@ -62,7 +62,7 @@ void writeLpFile()
     lpFile.close();
 }
 
-int main()
+int genereLp()
 {
     ifstream confFile;
     confFile.open("C:\\Users\\clair\\OneDrive\\Documents\\Valentin\\inst42.txt");

@@ -8,22 +8,33 @@
 
 #include "Capteur.h"
 
+int nb_cibles;
+int nb_capteurs;
+
+
+std::vector<Capteur*>* capteurs;
+
+int* capteursChoisis;
+int* ciblesChoisies;
+
+
 void lecture(std::string nameFile)
 {
-	
+
 	//int nb_cibles, nb_capteurs;
 	std::ifstream file(nameFile);
-	if(file.is_open())
+	if (file.is_open())
 	{
 		int param;
 
 		file >> param;
-		const int nb_cibles = param;
+		nb_cibles = param;
 
 		file >> param;
-		const int nb_capteurs = param;
+		nb_capteurs = param;
 
-		std::vector<Capteur*> capteurs(nb_capteurs);
+		capteurs = new  std::vector<Capteur*>(nb_capteurs);
+
 		for (int index = 0; index < nb_capteurs; index++)
 		{
 			int cout;
@@ -31,8 +42,8 @@ void lecture(std::string nameFile)
 
 			Capteur* capteur;
 			capteur = new Capteur(index, cout);
-			capteurs[index] = capteur;
-			
+			(*capteurs)[index] = capteur;
+
 		}
 		for (int index_cible = 0; index_cible < nb_cibles; index_cible++)
 		{
@@ -47,14 +58,61 @@ void lecture(std::string nameFile)
 				int id_capteur;
 				file >> id_capteur;
 
-				capteurs[id_capteur - 1]->addCible(cible);
-			}	
+				(*capteurs)[id_capteur - 1]->addCible(cible);
+			}
 		}
+	}
+}
+
+int rechercheCapteur()
+{
+	int capteurPris =-1;
+	double maxCoutImplentation = -1;
+	
+	for(int i=0;i<nb_capteurs;i++)
+	{
+		if (capteursChoisis[i] ==0)
+		{
+			Capteur capteur = capteurs[i];
+			int nbCiclesACouvrir;
+			for(j..nbcible)
+			{
+				if (ciblesChoisies[ capteur.getCibles()[j].id] == 0)
+				{
+					nbCiclesACouvrir++;
+				}
+			}
+			coutImplementation = nbCiclesACouvrir / capteur.getCout();
+			if (coutImplementation > maxCoutImplentation)
+			{
+				maxCoutImplentation = coutImplentation;
+				capteurPris = capteur.getId();
+			}
+		}
+		return capteurPris;
 	}
 }
 int main()
 {
 	lecture("inst41.txt");
+	capteursChoisis = new int* [nb_capteurs];
+	ciblesChoisies = new int* [nb_cibles];
+	//Init à 0 tableauèx;
+
+	while(!toutesLesCibles(ciblesChoisies))
+	{
+		capteurIndex = rechercheCapteur();
+		if (capteurIndex != -1)
+		{
+			//mettre à jour capteurs choisi
+			//mettre à jour cibles choisie
+		}
+		
+	}
+	
+	//Calcul cout tota
+	double coutTotal = 0;
+	
 }
 
 
