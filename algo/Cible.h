@@ -9,5 +9,10 @@ private:
 
 public:
 	Cible(int id);
+	
+	int get_id()
+	{
+		return id;
+	}
 };
 
