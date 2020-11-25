@@ -75,17 +75,17 @@ int rechercheCapteur()
 		{
 			Capteur capteur = capteurs[i];
 			int nbCiclesACouvrir;
-			for(j..nbcible)
+			for(int j = 0; j<= nbcible.nbcible)
 			{
 				if (ciblesChoisies[ capteur.getCibles()[j].id] == 0)
 				{
 					nbCiclesACouvrir++;
 				}
 			}
-			coutImplementation = nbCiclesACouvrir / capteur.getCout();
+			double coutImplementation = nbCiclesACouvrir / capteur.getCout();
 			if (coutImplementation > maxCoutImplentation)
 			{
-				maxCoutImplentation = coutImplentation;
+				maxCoutImplentation = coutImplementation;
 				capteurPris = capteur.getId();
 			}
 		}
